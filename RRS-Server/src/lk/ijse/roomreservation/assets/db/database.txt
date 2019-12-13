@@ -1,0 +1,376 @@
+-- CREATE DATABASE Room_Reservation_System;
+
+-- USE Room_Reservation_System;
+
+-- CREATE TABLE customer(
+-- contactNo int(10) NOT NULL,
+-- name varchar(30) NOT NULL,
+-- address varchar(40) NOT NULL,
+-- CONSTRAINT PRIMARY KEY(contactNo)
+-- ) ENGINE=INNODB;
+
+-- CREATE TABLE meal(
+-- meal_id int (30) NOT NULL AUTO_INCREMENT ,
+-- meal_name varchar(30) NOT NULL,
+-- description varchar(100) NOT NULL,
+-- CONSTRAINT PRIMARY KEY(meal_id)
+-- ) ENGINE=INNODB;
+
+
+
+-- CREATE TABLE reservation(
+-- reservation_id int (30) NOT NULL AUTO_INCREMENT ,
+-- contactNo int(10) NOT NULL,
+-- meal_id int (30) NOT NULL,
+-- CONSTRAINT PRIMARY KEY(reservation_id),
+-- CONSTRAINT FOREIGN KEY(contactNo) REFERENCES customer(contactNo),
+-- CONSTRAINT FOREIGN KEY(meal_id) REFERENCES meal(meal_id)
+-- ) ENGINE=INNODB;
+
+
+-- CREATE TABLE room(
+-- room_id int(30)NOT NULL AUTO_INCREMENT,
+-- ac boolean NOT NULL,
+-- beds int(40) NOT NULL,
+-- CONSTRAINT PRIMARY KEY(room_id)
+-- ) ENGINE=INNODB;
+
+
+-- CREATE TABLE reservation_details(
+-- reservation_id int (30) NOT NULL,
+-- room_id int(30)NOT NULL,
+-- start_date date NOT NULL,
+-- end_date date NOT NULL,
+-- CONSTRAINT PRIMARY KEY(reservation_id),
+-- CONSTRAINT FOREIGN KEY(reservation_id) REFERENCES reservation(reservation_id),
+-- CONSTRAINT FOREIGN KEY(room_id) REFERENCES room(room_id)
+-- ) ENGINE=INNODB;
+
+
+
+
+
+
+
+
+-- ======================================================================================
+
+
+drop DATABASE RoomReservation;
+CREATE DATABASE RoomReservation;
+USE RoomReservation;
+
+CREATE TABLE customer(
+	nic varchar(12),
+	name varchar(30) NOT NULL,
+	contactNo varchar(10) NOT NULL,
+	address text NOT NULL,
+	CONSTRAINT PRIMARY KEY(nic)
+);
+
+CREATE TABLE mealPackage(
+	id int AUTO_INCREMENT ,
+	packageName varchar(30) NOT NULL,
+	breakfast text,
+	lunch text,
+	dinner text,
+	CONSTRAINT PRIMARY KEY(id)
+);
+
+CREATE TABLE room(
+	id int NOT NULL AUTO_INCREMENT,
+	ac boolean NOT NULL,
+	capacity int,
+	CONSTRAINT PRIMARY KEY(id)
+);
+
+CREATE TABLE reservation(
+	id int AUTO_INCREMENT,
+	customerNIC varchar(12) NOT NULL,
+	adult int,
+	kids int,
+	packageId int NOT NULL,
+	CONSTRAINT PRIMARY KEY(id),
+	CONSTRAINT FOREIGN KEY(customerNIC) REFERENCES customer(nic) on update cascade on delete cascade,
+	CONSTRAINT FOREIGN KEY(packageId) REFERENCES mealPackage(id) on update cascade on delete cascade
+);
+
+
+CREATE TABLE reservationDetail(
+	id int AUTO_INCREMENT,
+	reservationId int NOT NULL,
+	roomId int NOT NULL,
+	startDate date NOT NULL,
+	endDate date NOT NULL,
+	CONSTRAINT PRIMARY KEY(id),
+	CONSTRAINT FOREIGN KEY(roomId) REFERENCES room(id) on update cascade on delete cascade,
+	CONSTRAINT FOREIGN KEY(reservationId) REFERENCES reservation(id) on update cascade on delete cascade
+);
+
+
+Insert into customer values("200115402137","Ravindu","0770180886","Horana");
+Insert into customer values("199912301244","Alistor","0771203984","Panadura");
+Insert into customer values("200115404375","Naveen","0777465894","Kaluthara");
+Insert into customer values("583413723v","Kavindu","0773748576","Bandaragam");
+
+
+Insert into room(ac,capacity) values(1,5);--1
+Insert into room(ac,capacity) values(1,2);--2
+Insert into room(ac,capacity) values(1,3);--3
+Insert into room(ac,capacity) values(0,1);--4
+Insert into room(ac,capacity) values(1,1);--5
+Insert into room(ac,capacity) values(0,4);--6
+Insert into room(ac,capacity) values(0,5);--7
+
+Insert into mealPackage(packageName,breakfast,lunch,dinner) values("PackOne","MilkRice","Rice And Curry","Noodles");
+Insert into mealPackage(packageName,breakfast,lunch,dinner) values("PackTwo","String Hoppers","Rice And Curry","Noodles");
+Insert into mealPackage(packageName,breakfast,lunch,dinner) values("PackThree","Rice And Curry","Fried Rice","Kottu");
+Insert into mealPackage(packageName,breakfast,lunch,dinner) values("PackFour","Green Gram","Nasigouran","Fried Rice");
+
+Insert into reservation(customerNIC,adult,kids,packageId) values("200115402137",1,1,3);
+Insert into reservation(customerNIC,adult,kids,packageId) values("583413723v",5,1,1);
+Insert into reservation(customerNIC,adult,kids,packageId) values("199912301244",2,0,4);
+Insert into reservation(customerNIC,adult,kids,packageId) values("200115402137",2,0,2);
+
+Insert into reservationDetail(reservationId,roomId,startDate,endDate) values(1,5,"2019-11-12","2019-11-13");
+Insert into reservationDetail(reservationId,roomId,startDate,endDate) values(2,5,"2019-11-16","2019-11-19");
+Insert into reservationDetail(reservationId,roomId,startDate,endDate) values(2,1,"2019-11-16","2019-11-18");
+Insert into reservationDetail(reservationId,roomId,startDate,endDate) values(3,4,"2019-11-12","2019-11-13");
+Insert into reservationDetail(reservationId,roomId,startDate,endDate) values(4,4,"2019-11-14","2019-11-16");
+
+
+
+Select * from room where (select r.id from reservationdetail rd, room r where rd.roomID=r.id && startDate="2019-11-12" && endDate="2019-11-13" limit 1)!=room.id;
+
+select r.id from reservationdetail rd, room r where rd.roomID=r.id && startDate="2019-11-12" && endDate="2019-11-13";
+
+
+select * from reservationDetail where startDate between "2019-11-11" AND"2019-11-13";
+
+
+
+
+select * from reservationDetail rd,room r where startDate NOT between "2019-11-11" AND"2019-11-13" && rd.roomId=r.id; 
+
+
+
+select * from reservationDetail rd,room r where startDate NOT between "2019-11-11" AND"2019-11-13" && endDate NOT between "2019-11-11" and "2019-11-13" && rd.roomId=r.id && r.ac=? && r.capacity=?; 
+select * from reservationDetail rd,room r where startDate NOT between \""+c.getStartDate()+"\" AND \""+c.getEndDate()+"\" && endDate NOT between  \""+c.getStartDate()+"\" and \""+c.getEndDate()+"\" && rd.roomId=r.id; 
+
+SELECT r.* FROM reservationDetail rd,room r WHERE startDate NOT BETWEEN \""+c.getStartDate()+"\" AND \""+c.getEndDate()+"\" && rd.roomId=r.id;
+
+
+select rd.id,r.* from reservationDetail rd,room r where startDate NOT between "2019-11-14" AND"2019-11-23" && endDate NOT between "2019-11-14" and "2019-11-23" && rd.roomId=r.id group by r.id;
+
+ -- && r.ac=0; 
+
+select * from reservationDetail group by roomId;
+
+
+
+
+
+5
+1
+4
+
+
+select DISTINCT roomId,startDate,endDate from reservationDetail rd,room r 
+where rd.roomId=r.id
+&& startDate NOT between "2019-11-14" AND"2019-11-23" 
+&& endDate NOT between "2019-11-14" and "2019-11-23";
+
+
+
+select * from reservationDetail order by startDate asc group by roomId;
+
+
+
+select r.* from reservationDetail rd,room r where startDate NOT between "2019-11-14" AND"2019-11-23" && endDate NOT between "2019-11-14" and "2019-11-23" && rd.roomId=r.id && r.ac=? && r.capacity=?; 
+
+
+
+
+SELECT *
+FROM    reservationdetail
+        INNER JOIN room ON reservationdetail.roomId=room.id
+GROUP BY room.id
+ORDER BY startDate asc ;
+
+
+
+SELECT * FROM (
+	SELECT * 
+    FROM reservationDetail
+    ORDER BY startDate asc
+) AS deatail
+where startDate NOT between "2019-11-14" AND"2019-11-23" 
+&& endDate NOT between "2019-11-14" and "2019-11-23"
+GROUP BY roomId;
+
+
+
+SELECT * FROM (
+	SELECT * 
+    FROM reservationDetail
+    where startDate NOT between "2019-11-14" AND"2019-11-23" 
+	&& endDate NOT between "2019-11-14" and "2019-11-23"
+    ORDER BY startDate asc
+) AS deatail
+GROUP BY roomId;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-- ==================================================================================================================================================================
+
+
+ 
+Select * from room r,reservationDetail rd where r.id=rd.room_id && ;
+
+
+select * from room;
+
+select * from reservationdetail where room_id=1;
+
+select * from reservationdetail where room_id=1 && start_date ="2019-11-27" && end_date = "2019-11-28" ;
+
+select * from reservationdetail rd, room r where rd.room_id=r.id && start_date="2019-11-27" && end_date = "2019-11-28";
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT * 
+FROM reservationdetail rd
+WHERE NOT EXISTS (SELECT * FROM room r WHERE rd.roomId = r.id);
+
+
+select * from reservationDetail rd, room r where rd.roomId=r.id Not EXISTS;
+
+
+
+
+
+
+
+
+=================================================================================
+
+SELECT *
+FROM   room
+WHERE  ID NOT IN (SELECT roomId FROM reservationdetail) && ac=0;
+
+=================================================================================
+
+
+
+select * from reservationdetail 
+where "2019-11-14" not
+between startDate and endDate && 
+"2019-11-27" not between startDate and endDate &&
+startDate between "2019-11-14" and "2019-11-27" &&
+endDate between "2019-11-14" and "2019-11-27"
+;
+
+
+
+
+
+select * from reservationdetail 
+where startDate Not 
+between "2019-11-14" and "2019-11-27" &&
+endDate Not 
+between "2019-11-14" and "2019-11-27";
+
+
+
+
+
+
+
+
+SELECT r.* FROM reservationDetail rd,room r WHERE startDate NOT BETWEEN '2019-11-15' AND '2019-11-20' && endDate NOT BETWEEN '2019-11-15' and '2019-11-20' && rd.roomId=r.id && rd.roomId=r.id && r.ac=1;
+
+
+
+select * from (r.* FROM reservationDetail rd,room r WHERE startDate NOT BETWEEN '2019-11-15' AND '2019-11-20' && endDate NOT BETWEEN '2019-11-15' and '2019-11-20' && rd.roomId=r.id && rd.roomId=r.id && r.ac=1)
+having id NOT IN (SELECT roomId FROM reservationdetail);
+
+(SELECT * FROM room WHERE  ID NOT IN (SELECT roomId FROM reservationdetail) && ac=?);
+
+
+
+
+
+
+
+
+
+
+
+SELECT * FROM reservationDetail rd group by rd.roomId;
+
+
+SELECT * FROM (reservationDetail rd group by rd.roomId) rd,room r WHERE startDate NOT BETWEEN '2019-11-17' AND '2019-11-20' &&
+endDate NOT BETWEEN '2019-11-17' and '2019-11-20' && rd.roomId=r.id 
+&& rd.roomId=r.id;
+
+5 1 8
+
+SELECT * FROM room WHERE  ID NOT IN (SELECT roomId FROM reservationdetail) && ac=1;
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXDatePicker?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXToggleButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="1346.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="lk.ijse.roomreservation.controller.ManagerController">
+   <children>
+      <AnchorPane layoutY="1.0" prefHeight="406.0" prefWidth="1346.0" style="-fx-background-color: #151515;" />
+      <AnchorPane layoutY="407.0" prefHeight="406.0" prefWidth="1349.0" style="-fx-background-color: #55efc4;" />
+      <AnchorPane focusTraversable="true" layoutX="25.0" layoutY="33.0" prefHeight="744.0" prefWidth="620.0" style="-fx-background-color: white; -fx-background-radius: 20;">
+         <children>
+            <Label layoutX="218.0" layoutY="3.0" prefHeight="44.0" prefWidth="156.0" text="Reservation">
+               <font>
+                  <Font name="AvenirLTStd-Roman" size="28.0" />
+               </font>
+            </Label>
+            <JFXTextField fx:id="txtCusNIC" labelFloat="true" layoutX="33.0" layoutY="94.0" onKeyReleased="#txtCusNICKeyRelease" prefHeight="26.0" prefWidth="252.0" promptText="Customer NIC" />
+            <JFXTextField fx:id="txtCusName" labelFloat="true" layoutX="33.0" layoutY="143.0" prefHeight="26.0" prefWidth="252.0" promptText="Customer Name" />
+            <JFXTextField fx:id="txtCusContact" labelFloat="true" layoutX="33.0" layoutY="193.0" prefHeight="26.0" prefWidth="252.0" promptText="Customer Contact" />
+            <TextArea fx:id="txtCusAddress" layoutX="330.0" layoutY="93.0" prefHeight="130.0" prefWidth="236.0" promptText="Customer Address" />
+            <Separator layoutX="22.0" layoutY="250.0" prefHeight="0.0" prefWidth="546.0" />
+            <Label layoutX="38.0" layoutY="522.0" text="Selected Package">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblPackageName" alignment="CENTER_RIGHT" layoutX="198.0" layoutY="522.0" prefHeight="27.0" prefWidth="117.0" text="package name">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="38.0" layoutY="562.0" text="BreakFast">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblBreakFast" alignment="CENTER_RIGHT" layoutX="198.0" layoutY="562.0" prefHeight="27.0" prefWidth="117.0" text="breakfast">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="366.0" layoutY="522.0" text="Lunch">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblLunch" alignment="CENTER_RIGHT" layoutX="453.0" layoutY="521.0" prefHeight="27.0" prefWidth="117.0" text="lunch">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="366.0" layoutY="562.0" text="Dinner">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblDinner" alignment="CENTER_RIGHT" layoutX="453.0" layoutY="561.0" prefHeight="27.0" prefWidth="117.0" text="dinner">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Separator layoutX="22.0" layoutY="490.0" prefHeight="0.0" prefWidth="546.0" />
+            <JFXTextField fx:id="txtNoOfAdults" labelFloat="true" layoutX="33.0" layoutY="274.0" prefHeight="26.0" prefWidth="252.0" promptText="No of Adults" />
+            <JFXTextField fx:id="txtNoOfKids" labelFloat="true" layoutX="313.0" layoutY="273.0" prefHeight="26.0" prefWidth="252.0" promptText="No of Kids" />
+            <TableView fx:id="tblReservationDetail" layoutX="31.0" layoutY="334.0" onMouseClicked="#tblReservationAction" prefHeight="132.0" prefWidth="539.0">
+               <columns>
+                  <TableColumn prefWidth="75.0" text="Room ID" />
+                  <TableColumn prefWidth="139.7333526611328" text="A/C or Non A/C" />
+                  <TableColumn prefWidth="77.5999755859375" text="Capacity" />
+                  <TableColumn prefWidth="122.40008544921875" text="Booked From" />
+                  <TableColumn prefWidth="129.60003662109375" text="to Booked" />
+               </columns>
+            </TableView>
+            <JFXButton fx:id="btnReserve" layoutX="71.0" layoutY="663.0" onAction="#btnReserveAction" prefHeight="56.0" prefWidth="470.0" style="-fx-background-color: #151515;" text="Reserve" textFill="#55efc4">
+               <font>
+                  <Font name="System Bold" size="26.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="677.0" layoutY="33.0" prefHeight="744.0" prefWidth="642.0" style="-fx-background-color: white; -fx-background-radius: 20;">
+         <children>
+            <Label layoutX="188.0" layoutY="8.0" prefHeight="44.0" prefWidth="214.0" text="Room Availabilty">
+               <font>
+                  <Font name="AvenirLTStd-Roman" size="28.0" />
+               </font>
+            </Label>
+            <JFXDatePicker fx:id="dtpStartDate" layoutX="38.0" layoutY="98.0" onAction="#dtpStartDateAction" prefWidth="265.0" promptText="Start Date" />
+            <JFXDatePicker fx:id="dtpEndDate" layoutX="38.0" layoutY="156.0" prefWidth="265.0" promptText="End Date" />
+            <JFXToggleButton fx:id="tglBtnAC" layoutX="55.0" layoutY="201.0" onAction="#tglBtnACActon" prefHeight="58.0" prefWidth="201.0" text="AC / Non AC" />
+            <JFXButton fx:id="btnSearchRoom" layoutX="31.0" layoutY="285.0" onAction="#btnSearchRoomAction" prefHeight="33.0" prefWidth="269.0" style="-fx-background-color: #55efc4;" text="Seacrh" textFill="#151515">
+               <font>
+                  <Font name="Roboto Bold" size="19.0" />
+               </font>
+            </JFXButton>
+            <TableView fx:id="tblRoom" layoutX="321.0" layoutY="77.0" onMouseClicked="#tblRoomMouseClick" prefHeight="250.0" prefWidth="301.0">
+              <columns>
+                <TableColumn prefWidth="75.0" text="ID" />
+                <TableColumn prefWidth="75.0" text="AC/ Non AC" />
+                  <TableColumn prefWidth="75.0" text="Capacity" />
+              </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+            <Separator layoutX="22.0" layoutY="377.0" prefHeight="2.0" prefWidth="600.0" />
+            <Label alignment="CENTER" layoutX="183.0" layoutY="395.0" prefHeight="44.0" prefWidth="214.0" text="Meal Packages">
+               <font>
+                  <Font name="AvenirLTStd-Roman" size="28.0" />
+               </font>
+            </Label>
+            <JFXTextField fx:id="txtBreakFast" labelFloat="true" layoutX="37.0" layoutY="517.0" prefWidth="252.0" promptText="BreakFast" />
+            <JFXTextField fx:id="txtLunch" labelFloat="true" layoutX="35.0" layoutY="567.0" prefWidth="252.0" promptText="Lunch" />
+            <JFXTextField fx:id="txtDinner" labelFloat="true" layoutX="35.0" layoutY="618.0" prefWidth="252.0" promptText="Dinner" />
+            <JFXButton fx:id="btnSelectPackage" layoutX="31.0" layoutY="676.0" onAction="#btnSelectPackageAction" prefHeight="33.0" prefWidth="269.0" style="-fx-background-color: #55efc4;" text="Select" textFill="#151515">
+               <font>
+                  <Font name="Roboto Bold" size="19.0" />
+               </font>
+            </JFXButton>
+            <TableView fx:id="tblPackages" layoutX="321.0" layoutY="464.0" onMouseClicked="#tblPackagesMouseClick" prefHeight="250.0" prefWidth="302.0">
+               <columns>
+                  <TableColumn prefWidth="75.0" text="Name" />
+                  <TableColumn prefWidth="75.0" text="BreakFast" />
+                  <TableColumn prefWidth="75.0" text="Lunch" />
+                  <TableColumn prefWidth="75.0" text="Dinner" />
+               </columns>
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+            <JFXButton fx:id="btnAddRoom" contentDisplay="GRAPHIC_ONLY" layoutX="411.0" layoutY="6.0" onAction="#btnAddRoomAction" prefHeight="45.0" prefWidth="40.0" style="-fx-background-color: #55efc4;">
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/img/1_1-512.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnAddPackage" contentDisplay="GRAPHIC_ONLY" layoutX="395.0" layoutY="392.0" onAction="#btnAddPackageAction" prefHeight="40.0" prefWidth="40.0" style="-fx-background-color: #55efc4;">
+               <graphic>
+                  <ImageView fitHeight="35.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../assets/img/1_1-512.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXTextField fx:id="txtPackageName" labelFloat="true" layoutX="36.0" layoutY="462.0" prefWidth="252.0" promptText="Package Name" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="pnlAlert" layoutY="821.0" prefHeight="56.0" prefWidth="1350.0" style="-fx-background-color: #151515;">
+         <children>
+            <Label fx:id="lblAlert" alignment="CENTER" layoutX="43.0" layoutY="-5.0" prefHeight="40.0" prefWidth="1272.0" text="Alerts Will Display Here">
+               <font>
+                  <Font name="System Bold" size="19.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

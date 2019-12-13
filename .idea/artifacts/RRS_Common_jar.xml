@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="RRS-Common:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/RRS_Common_jar</output-path>
+    <root id="archive" name="RRS-Common.jar">
+      <element id="module-output" name="RRS-Common" />
+    </root>
+  </artifact>
+</component>
